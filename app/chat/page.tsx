@@ -5,7 +5,13 @@ import {
   ConversationContent,
   ConversationScrollButton,
 } from '@/components/ai-elements/conversation'
-import { Message, MessageContent } from '@/components/ai-elements/message'
+import {
+  Message,
+  MessageAction,
+  MessageActions,
+  MessageContent,
+  MessageResponse,
+} from '@/components/ai-elements/message'
 import {
   PromptInput,
   PromptInputActionAddAttachments,
@@ -28,10 +34,8 @@ import {
   PromptInputFooter,
   PromptInputTools,
 } from '@/components/ai-elements/prompt-input'
-// import { Action, Actions } from '@/components/ai-elements/actions'
 import { Fragment, useState } from 'react'
 import { useChat } from '@ai-sdk/react'
-// import { Response } from '@/components/ai-elements/response'
 import { CopyIcon, GlobeIcon, RefreshCcwIcon } from 'lucide-react'
 import {
   Source,
@@ -124,29 +128,28 @@ const ChatBotDemo = () => {
                         <Fragment key={`${message.id}-${i}`}>
                           <Message from={message.role}>
                             <MessageContent>
-                              {/* <Response>{part.text}</Response> */}
-                              {part.text}
+                              <MessageResponse>{part.text}</MessageResponse>
                             </MessageContent>
                           </Message>
-                          {/* {message.role === 'assistant' &&
+                          {message.role === 'assistant' &&
                             i === messages.length - 1 && (
-                              <Actions className="mt-2">
-                                <Action
+                              <MessageActions className="mt-2">
+                                <MessageAction
                                   onClick={() => regenerate()}
                                   label="Retry"
                                 >
                                   <RefreshCcwIcon className="size-3" />
-                                </Action>
-                                <Action
+                                </MessageAction>
+                                <MessageAction
                                   onClick={() =>
                                     navigator.clipboard.writeText(part.text)
                                   }
                                   label="Copy"
                                 >
                                   <CopyIcon className="size-3" />
-                                </Action>
-                              </Actions>
-                            )} */}
+                                </MessageAction>
+                              </MessageActions>
+                            )}
                         </Fragment>
                       )
                     case 'reasoning':
