@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next'
+import './envConfig'
 
 const nextConfig: NextConfig = {
   turbopack: {
@@ -9,11 +10,25 @@ const nextConfig: NextConfig = {
       },
     },
   },
-  rewrites: async () => {
+  async rewrites() {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://127.0.0.1:8000/api/:path*',
+        destination: `${process.env.SERVER_BASE_URL}/api/:path*`,
+        basePath: false,
+      },
+    ]
+  },
+  async headers() {
+    return [
+      {
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'ngrok-skip-browser-warning',
+            value: 'true',
+          },
+        ],
         basePath: false,
       },
     ]
