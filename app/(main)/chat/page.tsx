@@ -54,6 +54,7 @@ import {
 import { Loader } from '@/components/ai-elements/loader'
 import { DefaultChatTransport } from 'ai'
 import { TypewriterEffectSmooth } from '@/components/ui/typewriter-effect'
+import { UIText } from '@/types'
 
 const models = [
   {
@@ -77,7 +78,7 @@ const words = [
     text: 'with',
   },
   {
-    text: 'SuperAI',
+    text: UIText.AppName,
     className: 'text-blue-500',
   },
   {
