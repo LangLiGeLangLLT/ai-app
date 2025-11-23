@@ -6,13 +6,16 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { SquarePen, Trash } from 'lucide-react'
+import { RefreshCcw, SquarePen, Trash } from 'lucide-react'
 import AddResource from './_components/add-resource'
 
 export default function Page() {
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-      <div>
+      <div className="flex gap-4">
+        <Button>
+          <RefreshCcw /> Refresh
+        </Button>
         <AddResource />
       </div>
       <div className="grid auto-rows-min gap-4 md:grid-cols-4">
