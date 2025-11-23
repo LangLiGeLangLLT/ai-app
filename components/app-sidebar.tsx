@@ -6,8 +6,10 @@ import {
   Bot,
   Command,
   Frame,
+  LayoutDashboard,
   LifeBuoy,
   Map,
+  MessagesSquare,
   PieChart,
   Send,
   Settings2,
@@ -37,10 +39,15 @@ const data = {
   },
   navMain: [
     {
+      title: 'Dashboard',
+      url: '/dashboard',
+      icon: LayoutDashboard,
+    },
+    {
       title: 'Playground',
       url: '#',
       icon: SquareTerminal,
-      isActive: true,
+      isActive: false,
       items: [
         {
           title: 'History',
@@ -135,6 +142,11 @@ const data = {
     },
   ],
   projects: [
+    {
+      name: 'AI Chat',
+      url: '/chat',
+      icon: MessagesSquare,
+    },
     {
       name: 'Design Engineering',
       url: '#',
