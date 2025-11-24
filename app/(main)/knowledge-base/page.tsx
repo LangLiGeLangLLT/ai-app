@@ -53,7 +53,7 @@ export default function Page() {
         ) : !knowledgeBases?.length ? (
           <div className="flex-1 flex justify-center items-center">
             <Empty>
-              <EmptyTitle>No Knowledge Bases Found</EmptyTitle>
+              <EmptyTitle>No Knowledge Base Found</EmptyTitle>
             </Empty>
           </div>
         ) : (
