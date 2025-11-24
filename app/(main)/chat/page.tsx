@@ -111,8 +111,8 @@ const ChatBotDemo = () => {
       },
       {
         body: {
-          model: model,
-          webSearch: webSearch,
+          model,
+          webSearch,
         },
       }
     )
@@ -132,7 +132,7 @@ const ChatBotDemo = () => {
           {!!messages.length && (
             <Conversation className="h-full overflow-y-hidden">
               <ConversationContent>
-                {messages.map((message) => (
+                {messages.map((message, index) => (
                   <div key={message.id}>
                     {message.role === 'user' &&
                       message.parts.filter((part) => part.type === 'file')
@@ -186,10 +186,17 @@ const ChatBotDemo = () => {
                               </MessageContent>
                             </Message>
                             {message.role === 'assistant' &&
-                              i === messages.length - 1 && (
+                              index === messages.length - 1 && (
                                 <MessageActions className="mt-2">
                                   <MessageAction
-                                    onClick={() => regenerate()}
+                                    onClick={() =>
+                                      regenerate({
+                                        body: {
+                                          model,
+                                          webSearch,
+                                        },
+                                      })
+                                    }
                                     label="Retry"
                                   >
                                     <RefreshCcwIcon className="size-3" />
