@@ -6,13 +6,7 @@ export async function loadKnowledgeBases() {
   return http.get<KnowledgeBase[]>(`/api/knowledge-base`)
 }
 
-export async function createKnowledgeBase({
-  name,
-  content,
-}: {
-  name: string
-  content: string
-}) {
+export async function createKnowledgeBase({ name, content }: KnowledgeBase) {
   return http.post<unknown>(`/api/knowledge-base`, {
     name,
     content,
@@ -23,11 +17,7 @@ export async function updateKnowledgeBase({
   id,
   name,
   content,
-}: {
-  id: number
-  name: string
-  content: string
-}) {
+}: KnowledgeBase) {
   return http.post<unknown>(`/api/knowledge-base`, {
     id,
     name,
@@ -35,12 +25,8 @@ export async function updateKnowledgeBase({
   })
 }
 
-export async function deleteKnowledgeBase({
-  knowledgeBaseId,
-}: {
-  knowledgeBaseId: number
-}) {
-  return http.delete<unknown>(`/api/knowledge-base/${knowledgeBaseId}`)
+export async function deleteKnowledgeBase({ id }: KnowledgeBase) {
+  return http.delete<unknown>(`/api/knowledge-base/${id}`)
 }
 
 export async function uploadFile(fileList: File[]) {

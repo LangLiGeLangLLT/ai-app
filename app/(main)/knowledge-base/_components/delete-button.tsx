@@ -23,7 +23,7 @@ export default function DeleteButton({
 
       setIsLoading(true)
 
-      await deleteKnowledgeBase({ knowledgeBaseId: knowledgeBase.id })
+      await deleteKnowledgeBase({ id: knowledgeBase.id })
 
       onDeleteSuccess()
       toast.success('Deleted Successfully')

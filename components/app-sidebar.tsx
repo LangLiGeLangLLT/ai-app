@@ -143,7 +143,7 @@ const data = {
   ],
   projects: [
     {
-      name: 'AI Chat',
+      name: UIText.AIChat,
       url: '/chat',
       icon: MessagesSquare,
     },
