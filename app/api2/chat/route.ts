@@ -26,13 +26,13 @@ export async function POST(req: Request) {
     webSearch: boolean
   } = await req.json()
 
-  try {
-    return createUIMessageStreamResponse({
-      stream: createUIMessageStream({
-        async execute({ writer }) {
-          const modelMessages = convertToModelMessages(messages)
+  return createUIMessageStreamResponse({
+    stream: createUIMessageStream({
+      async execute({ writer }) {
+        const modelMessages = convertToModelMessages(messages)
 
-          if (webSearch) {
+        if (webSearch) {
+          try {
             const sseClient = await createMCPClient({
               transport: {
                 type: 'sse',
@@ -72,43 +72,31 @@ export async function POST(req: Request) {
             })
 
             modelMessages.push(...(await response).messages)
-          }
+          } catch {}
+        }
 
-          const result = streamText({
-            model: qwen(model),
-            messages: modelMessages,
-            system: prompt,
-            stopWhen: stepCountIs(5),
-            tools: {
-              retrieve: tool({
-                description: `get information from your knowledge base to answer questions.`,
-                inputSchema: z.object({
-                  query: z.string().describe(`the users query`),
-                }),
-                execute: async ({ query }) => retrieve(query),
+        const result = streamText({
+          model: qwen(model),
+          messages: modelMessages,
+          system: prompt,
+          stopWhen: stepCountIs(5),
+          tools: {
+            retrieve: tool({
+              description: `get information from your knowledge base to answer questions.`,
+              inputSchema: z.object({
+                query: z.string().describe(`the users query`),
               }),
-            },
+              execute: async ({ query }) => retrieve(query),
+            }),
+          },
+        })
+        writer.merge(
+          result.toUIMessageStream({
+            sendSources: true,
+            sendReasoning: true,
           })
-          writer.merge(
-            result.toUIMessageStream({
-              sendSources: true,
-              sendReasoning: true,
-            })
-          )
-        },
-      }),
-    })
-  } catch {
-    return createUIMessageStreamResponse({
-      stream: createUIMessageStream({
-        execute({ writer }) {
-          const result = streamText({
-            model: qwen(model),
-            prompt: `Only Say: Internal Server Error`,
-          })
-          writer.merge(result.toUIMessageStream())
-        },
-      }),
-    })
-  }
+        )
+      },
+    }),
+  })
 }
