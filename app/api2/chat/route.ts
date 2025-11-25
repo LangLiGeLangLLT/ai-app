@@ -79,6 +79,14 @@ export async function POST(req: Request) {
           model: qwen(model),
           messages: modelMessages,
           system: prompt,
+          prepareStep: async ({ messages }) => {
+            if (messages.length > 20) {
+              return {
+                messages: messages.slice(-10),
+              }
+            }
+            return {}
+          },
           stopWhen: stepCountIs(5),
           tools: {
             retrieve: tool({
