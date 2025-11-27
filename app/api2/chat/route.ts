@@ -72,7 +72,7 @@ export async function POST(req: Request) {
     tools: {
       ...(webSearch ? sseClientTools : {}),
       retrieve: tool({
-        description: `get information from your knowledge base to answer questions.`,
+        description: `Get information from your knowledge base to answer questions.`,
         inputSchema: z.object({
           query: z.string().describe(`the users query`),
         }),
