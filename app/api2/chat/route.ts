@@ -45,7 +45,7 @@ export async function POST(req: Request) {
         schemas: {
           bailian_web_search: {
             description:
-              'Search can be used to query information such as encyclopedia knowledge, current news, weather, etc.',
+              'Search can be used to query information such as financial knowledge, encyclopedia knowledge, current news, weather, etc.',
             inputSchema: z.object({
               query: z.string().describe('user query in the format of string'),
               count: z.number().optional().describe('number of search results'),
