@@ -96,7 +96,7 @@ export default function UploadButton({
                 control={control}
                 name="fileList"
                 render={({ field }) => (
-                  <div className="h-fit">
+                  <div className="h-fit [&_.ant-upload-list-item-name]:w-16">
                     <Upload.Dragger
                       multiple
                       fileList={field.value}
