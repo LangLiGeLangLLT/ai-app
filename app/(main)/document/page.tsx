@@ -11,9 +11,7 @@ import {
 import { KnowledgeBase } from '@/types'
 import { loadKnowledgeBases } from '@/api/knowledge-base'
 import { Empty, EmptyTitle } from '@/components/ui/empty'
-import CreateButton from './_components/create-button'
 import EditButton from './_components/edit-button'
-import UploadButton from './_components/upload-button'
 import DeleteButton from './_components/delete-button'
 import RefreshButton from './_components/refresh-button'
 import { Button } from '@/components/ui/button'
@@ -47,8 +45,6 @@ export default function Page() {
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
       <div className="flex gap-4">
         <RefreshButton onRefreshSuccess={onRefresh} />
-        <CreateButton onCreateSuccess={init} />
-        <UploadButton onUploadSuccess={init} />
       </div>
       <div className="flex-1 flex flex-col">
         {isLoading ? (
@@ -56,7 +52,7 @@ export default function Page() {
         ) : !knowledgeBases?.length ? (
           <div className="flex-1 flex justify-center items-center">
             <Empty>
-              <EmptyTitle>No Knowledge Base Found</EmptyTitle>
+              <EmptyTitle>No Documentation Found</EmptyTitle>
             </Empty>
           </div>
         ) : (
@@ -74,7 +70,7 @@ export default function Page() {
                 <CardFooter className="flex flex-col space-y-2">
                   <div className="ml-auto">
                     <Link
-                      href={`/knowledge/${knowledgeBase.id}`}
+                      href={`/document/${knowledgeBase.id}`}
                       target="_blank"
                     >
                       <Button variant="ghost" size="icon">

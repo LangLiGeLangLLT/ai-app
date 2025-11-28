@@ -44,6 +44,11 @@ const data = {
       icon: Book,
     },
     {
+      title: 'Documentation',
+      url: '/document',
+      icon: BookOpen,
+    },
+    {
       title: 'Playground',
       url: '#',
       icon: SquareTerminal,
@@ -78,29 +83,6 @@ const data = {
         },
         {
           title: 'Quantum',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Documentation',
-      url: '#',
-      icon: BookOpen,
-      items: [
-        {
-          title: 'Introduction',
-          url: '#',
-        },
-        {
-          title: 'Get Started',
-          url: '#',
-        },
-        {
-          title: 'Tutorials',
-          url: '#',
-        },
-        {
-          title: 'Changelog',
           url: '#',
         },
       ],
