@@ -1,6 +1,5 @@
 import { http } from '@/hooks/use-http'
 import { KnowledgeBase } from '@/types'
-import { first } from 'lodash-es'
 
 export async function loadKnowledgeBases({
   type,
@@ -39,10 +38,9 @@ export async function deleteKnowledgeBase({ id }: KnowledgeBase) {
 
 export async function uploadFile(fileList: File[]) {
   const formData = new FormData()
-  const file = first(fileList)
 
-  if (file) {
-    formData.append('file', file)
+  for (const file of fileList) {
+    formData.append(file.name, file)
   }
 
   return http.post<unknown>(`/api/upload-file`, formData)

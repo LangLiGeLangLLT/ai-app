@@ -12,19 +12,20 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
 import { Spinner } from '@/components/ui/spinner'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Upload } from 'lucide-react'
+import { Upload as UploadIcon } from 'lucide-react'
 import React from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import z from 'zod'
 import mime from 'mime'
 import { UIText } from '@/types'
+import { Upload, UploadFile } from 'antd'
+import { InboxOutlined } from '@ant-design/icons'
 
 const schema = z.object({
-  fileList: z.array(z.instanceof(File)).min(1),
+  fileList: z.array(z.any()).min(1),
 })
 const acceptExtensions = ['txt', 'pdf', 'doc', 'docx', 'png', 'jpg', 'jpeg']
 const acceptMessage = `Please upload: ${acceptExtensions.join(', ')}`
@@ -80,7 +81,7 @@ export default function UploadButton({
     >
       <DialogTrigger asChild>
         <Button>
-          <Upload /> Upload
+          <UploadIcon /> Upload
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -95,25 +96,40 @@ export default function UploadButton({
                 control={control}
                 name="fileList"
                 render={({ field }) => (
-                  <Input
-                    ref={fileRef}
-                    type="file"
-                    onChange={(e) => {
-                      if (e.target.files?.length) {
-                        const file = e.target.files[0]
+                  <div className="h-fit">
+                    <Upload.Dragger
+                      multiple
+                      fileList={field.value}
+                      onRemove={(file) => {
+                        const fileList = field.value as UploadFile[]
+                        const index = fileList.indexOf(file)
+                        const newFileList = fileList.slice()
+                        newFileList.splice(index, 1)
+                        field.onChange(newFileList)
+                      }}
+                      beforeUpload={(file, uploadFileList) => {
                         const extension =
                           mime.getExtension(mime.getType(file.name) || '') || ''
 
                         if (acceptExtensions.indexOf(extension) === -1) {
-                          toast.warning(acceptMessage)
-                          e.target.value = ''
-                          field.onChange([])
-                          return
+                          toast.error(acceptMessage)
+                          return false
                         }
-                        field.onChange([file])
-                      }
-                    }}
-                  />
+
+                        const fileList = field.value as UploadFile[]
+                        const newFileList = [...uploadFileList, ...fileList]
+                        field.onChange(newFileList)
+                        return false
+                      }}
+                    >
+                      <p className="ant-upload-drag-icon">
+                        <InboxOutlined />
+                      </p>
+                      <p className="ant-upload-text">
+                        Click or drag file to this area to upload
+                      </p>
+                    </Upload.Dragger>
+                  </div>
                 )}
               />
             </div>
