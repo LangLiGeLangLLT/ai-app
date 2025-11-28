@@ -2,8 +2,16 @@ import { http } from '@/hooks/use-http'
 import { KnowledgeBase } from '@/types'
 import { first } from 'lodash-es'
 
-export async function loadKnowledgeBases() {
-  return http.get<KnowledgeBase[]>(`/api/knowledge-base`)
+export async function loadKnowledgeBases({
+  type,
+}: {
+  type: KnowledgeBase['type']
+}) {
+  return http.get<KnowledgeBase[]>(`/api/knowledge-base`, {
+    params: {
+      type,
+    },
+  })
 }
 
 export async function createKnowledgeBase({ name, content }: KnowledgeBase) {
@@ -38,4 +46,17 @@ export async function uploadFile(fileList: File[]) {
   }
 
   return http.post<unknown>(`/api/upload-file`, formData)
+}
+
+export async function generateKnowledgeBase({
+  knowledgeIds,
+  advice,
+}: {
+  knowledgeIds: KnowledgeBase['id'][]
+  advice: string
+}) {
+  return http.post<unknown>(`/api/knowledge-base/summary`, {
+    knowledge_base_id_list: knowledgeIds,
+    user_advance: advice,
+  })
 }

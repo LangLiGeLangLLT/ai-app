@@ -29,7 +29,7 @@ export default function Page() {
   async function init() {
     try {
       setIsLoading(true)
-      const { data } = await loadKnowledgeBases()
+      const { data } = await loadKnowledgeBases({ type: 'processed' })
       setKnowledgeBases(data)
     } catch {
     } finally {
@@ -69,10 +69,7 @@ export default function Page() {
                 </CardContent>
                 <CardFooter className="flex flex-col space-y-2">
                   <div className="ml-auto">
-                    <Link
-                      href={`/document/${knowledgeBase.id}`}
-                      target="_blank"
-                    >
+                    <Link href={`/doc/${knowledgeBase.id}`} target="_blank">
                       <Button variant="ghost" size="icon">
                         <Eye />
                       </Button>

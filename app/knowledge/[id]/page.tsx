@@ -18,8 +18,8 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
   async function init() {
     try {
       setIsLoading(true)
-      const { data } = await loadKnowledgeBases()
-      const newKnowledgeBase = find(data, (item) => `${item.id}` === id)
+      const { data } = await loadKnowledgeBases({ type: 'raw' })
+      const newKnowledgeBase = find(data, (item) => item.id === id)
       setKnowledgeBase(newKnowledgeBase)
     } catch {
     } finally {

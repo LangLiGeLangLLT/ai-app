@@ -19,6 +19,7 @@ import RefreshButton from './_components/refresh-button'
 import { Button } from '@/components/ui/button'
 import { Eye } from 'lucide-react'
 import Link from 'next/link'
+import GenerateButton from './_components/generate-button'
 
 export default function Page() {
   const [knowledgeBases, setKnowledgeBases] = React.useState<KnowledgeBase[]>()
@@ -31,7 +32,7 @@ export default function Page() {
   async function init() {
     try {
       setIsLoading(true)
-      const { data } = await loadKnowledgeBases()
+      const { data } = await loadKnowledgeBases({ type: 'raw' })
       setKnowledgeBases(data)
     } catch {
     } finally {
@@ -49,6 +50,7 @@ export default function Page() {
         <RefreshButton onRefreshSuccess={onRefresh} />
         <CreateButton onCreateSuccess={init} />
         <UploadButton onUploadSuccess={init} />
+        <GenerateButton />
       </div>
       <div className="flex-1 flex flex-col">
         {isLoading ? (

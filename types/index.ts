@@ -6,7 +6,7 @@ export enum UIText {
 }
 
 export type KnowledgeBase = Partial<{
-  id: number
+  id: string
   name: string
   content: string
   type: 'raw' | 'processed'

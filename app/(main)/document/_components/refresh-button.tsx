@@ -17,7 +17,7 @@ export default function RefreshButton({
   async function onRefresh() {
     try {
       setIsLoading(true)
-      const { data } = await loadKnowledgeBases()
+      const { data } = await loadKnowledgeBases({ type: 'processed' })
       onRefreshSuccess(data)
     } catch {
     } finally {
