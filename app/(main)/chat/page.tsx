@@ -96,7 +96,7 @@ const ChatBotDemo = () => {
   const [webSearch, setWebSearch] = useState(false)
   const { messages, sendMessage, status, regenerate } = useChat({
     transport: new DefaultChatTransport({
-      api: '/api2/chat',
+      api: '/api/chat',
     }),
   })
 

@@ -1,10 +1,4 @@
-import {
-  streamText,
-  UIMessage,
-  convertToModelMessages,
-  tool,
-  stepCountIs,
-} from 'ai'
+import { streamText, UIMessage, convertToModelMessages, stepCountIs } from 'ai'
 import { qwen } from '@/lib/ai/qwen'
 import {
   experimental_createMCPClient as createMCPClient,
@@ -12,7 +6,6 @@ import {
 } from '@ai-sdk/mcp'
 import prompt from './prompt.md'
 import z from 'zod'
-import { retrieve } from '@/lib/actions/retrieve'
 
 export const maxDuration = 30
 
@@ -71,13 +64,6 @@ export async function POST(req: Request) {
     stopWhen: stepCountIs(5),
     tools: {
       ...(webSearch ? sseClientTools : {}),
-      retrieve: tool({
-        description: `Get information from your knowledge base to answer questions.`,
-        inputSchema: z.object({
-          query: z.string().describe(`the users query`),
-        }),
-        execute: async ({ query }) => retrieve(query),
-      }),
     },
     onFinish: async () => {
       await sseClient?.close()

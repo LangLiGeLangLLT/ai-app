@@ -10,15 +10,6 @@ const nextConfig: NextConfig = {
       },
     },
   },
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: `${process.env.SERVER_BASE_URL}/api/:path*`,
-        basePath: false,
-      },
-    ]
-  },
 }
 
 export default nextConfig
